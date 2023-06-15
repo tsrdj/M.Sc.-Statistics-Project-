@@ -1,0 +1,37 @@
+---
+title: "Time Series"
+author: "Diksha Patil"
+date: "2023-05-20"
+output: html_document
+---
+
+```{r}
+df=read.csv("C:\\Users\\FLUTE\\Desktop\\Loadability.csv")
+plot(df$L)
+ts.plot(df$L)
+acf(df$L)
+n=length(df$L)
+n
+r0=acf(df$L,n-1);r0
+m1=arima(df$L,order=c(1,0,0));m1
+m2=arima(df$L,order=c(2,0,0));m2
+m3=arima(df$L,order=c(3,0,0));m3
+m4=arima(df$L,order=c(1,0,1));m4
+BIC(m1,m2,m3,m4)
+```
+```{r}
+library(forecast)
+y=df$L
+plot(y)
+ts.plot(y)
+n=length(y);n
+ro=acf(y,n-1);ro
+par(mfrow=c(1,2))
+acf(y)
+b=auto.arima(y);b
+plot(forecast(b,12))
+```
+```{r}
+tsdiag(b)
+```
+
